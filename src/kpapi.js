@@ -1,5 +1,6 @@
 var TelegramBot = require('node-telegram-bot-api');
 const mdb = require('moviedb')('9f619f0ff604d6614f3c9db76ca445ed');
+var options = require('./options.js')
 
 // Устанавливаем токен, который выдавал нам бот.
 var token = '455685254:AAGFLOjxbPWjg-2126PF_pOUqdnUpdExuM0';
@@ -8,7 +9,7 @@ var bot = new TelegramBot(token, {polling: true});
 
 bot.onText(/\/movie (.+)/, function (msg, match) {
       var fromId = msg.from.id;
-      mdb.searchMovie({ query: match[1] }, (err, res) => {
+      mdb.searchMovie({ query: match[1] }, (err, res) => { 
       	if (res.total_results  == 0) {
       		bot.sendMessage(fromId, '😢 Sorry, nothing found(');
       	} else {
@@ -29,11 +30,16 @@ bot.onText(/\/cast (.+)/, function(msg,match) {
 		if (res.total_results == 0) {
 			bot.sendMessage(fromId, '😢 Sorry, nothing found(');
 		}else {
-		bot.sendPhoto(fromId, ('https://image.tmdb.org/t/p/w500' + res.results[0].profile_path), {caption: "*🌐 Best known for:* " + res.results[0].known_for[0].title + '\n' + res.results[0].known_for[0].overview})
+		bot.sendPhoto(fromId, ('https://image.tmdb.org/t/p/w500' + res.results[0].profile_path), {caption: "🌐 Best known for: " + res.results[0].known_for[0].title + '\n' + res.results[0].known_for[0].overview})
 		}
 	});
 
 });
+
+bot.onText(/\/genres/, (msg) => {
+	bot.sendMessage(msg.chat.id, 'Выберите любую кнопку:', options.keys);
+});
+
 
 
 
