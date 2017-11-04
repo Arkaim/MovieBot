@@ -1,6 +1,6 @@
 # ISE Project Telegram Movie Bot
 
-![alt text](https://github.com/Arkaim/MovieBot/blob/master/iPhoneX_08.jpg "Logo Title Text 1")
+![alt text](https://github.com/Arkaim/MovieBot/blob/master/iPhoneX_08.jpg "Movie Bot")
 
 ## How to use:
 1) Use */movie movieTitle* command to search info about the movie.
