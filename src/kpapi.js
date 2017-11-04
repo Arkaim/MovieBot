@@ -1,11 +1,14 @@
+var TToken = require('../tokens/tokens.js')
+
+
 var TelegramBot = require('node-telegram-bot-api');
-const mdb = require('moviedb')('9f619f0ff604d6614f3c9db76ca445ed');
+const mdb = require('moviedb')(TToken.TMDBToken);
 var options = require('./options.js')
 var Promise = require('promise');
 
 
 // Мой установленый токен
-var token = '455685254:AAGFLOjxbPWjg-2126PF_pOUqdnUpdExuM0';
+var token = TToken.TelegramBotToken;
 // включил опрос сервера, не знаю зачем но в туториале так сделали
 var bot = new TelegramBot(token, {polling: true});
 
