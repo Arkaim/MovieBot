@@ -12,7 +12,9 @@ var token = TToken.TelegramBotToken;
 // включил опрос сервера, не знаю зачем но в туториале так сделали
 var bot = new TelegramBot(token, {polling: true});
 
-
+bot.onText(/\/start/, (msg) => {
+	bot.sendMessage(msg.chat.id, 'Hello! Nice to meet you. We have some brilliant commands: /movie and /cast can help you find information, /genre command can help you choose which movie to watch today :)');
+});
 
 bot.onText(/\/movie (.+)/, function (msg, match) {
       var fromId = msg.from.id;
@@ -25,8 +27,15 @@ bot.onText(/\/movie (.+)/, function (msg, match) {
 		    var duration = res.runtime;
       		var result = ("📅 Release Date: " + req.release_date + "\n" + "🌐 Original Language: " + req.original_language +'\n' + '🕑 Duration: ' + duration + ' min' + '\n⭐ Rating: ' + res.vote_average + '/10\n'  + '🔖 Genre: ' + res.genres[0].name + '\n💰 Budget: ' + res.budget + '$');
 	    bot.sendPhoto(fromId, ('https://image.tmdb.org/t/p/w500' + req.poster_path), {caption:result});
-	    bot.sendMessage(fromId, ('✍ *Tagline:* ' + res.tagline  + '\n*🎞 Description:* ' + res.overview + '\n') , {parse_mode: 'Markdown'});
+	    bot.sendMessage(fromId, ('✍ *Tagline:* ' + res.tagline  + '\n*🎞 Description:* ' + res.overview + '\n' ) , {parse_mode: 'Markdown'});
 		});
+
+		mdb.movieVideos({id: req.id}, (err, res) => {
+			if (res.results[0] != null) {
+				bot.sendDocument(fromId, 'https://www.youtube.com/watch?v=xQZvQblHsBs');
+			}
+	    	
+	    })
       }
     });    
 });
