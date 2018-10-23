@@ -12,6 +12,8 @@ var token = TToken.TelegramBotToken;
 // включил опрос сервера, не знаю зачем но в туториале так сделали
 var bot = new TelegramBot(token, {polling: true});
 
+var adminChatId = 0;
+
 bot.onText(/\/start/, (msg) => {
 	bot.sendMessage(msg.chat.id, 'Hello! Nice to meet you. We have some brilliant commands: /movie and /cast can help you find information, /genre command can help you choose which movie to watch today :)');
 });
@@ -94,6 +96,13 @@ bot.on('callback_query', function(msg) {
 	}
 	
 })
+
+bot.onText(/\/report/, msg => {
+	var reportText = msg.text.slice(8);
+	if (reportText !== '') {
+		bot.sendMessage(adminChatId, 'Report from ' + msg.chat.id + '\n' + reportText);
+	}
+});
 
 
 
